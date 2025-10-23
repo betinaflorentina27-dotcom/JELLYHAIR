@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>JellyHair — Gomas para Crescimento Capilar</title>
+  <style>
+    :root{
+      --pink:#f6c4d0;
+      --magenta:#d94fd2;
+      --deep:#c43aa8;
+      --white:#fff;
+      --card-bg:linear-gradient(180deg,#ffeff9,#fceef7);
+      --glass: rgba(255,255,255,0.6);
+      font-family: "Helvetica Neue", Arial, sans-serif;
+    }
+    body{ margin:0; background:var(--pink); color:#333; -webkit-font-smoothing:antialiased; }
+    header{
+      background: linear-gradient(90deg, #ffdff0 0%, #ffd6f5 100%);
+      padding:20px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      box-shadow:0 4px 18px rgba(0,0,0,0.06);
+      position:sticky;
+      top:0;
+      z-index:40;
+    }
+    .brand{
+      display:flex; gap:12px; align-items:center;
+    }
+    .logo{
+      width:56px; height:56px; border-radius:12px;
+      background:var(--magenta); display:flex; align-items:center; justify-content:center;
+      color:white; font-weight:700; font-size:18px; box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    }
+    nav a{ margin:0 8px; color:#6b2b6b; text-decoration:none; font-weight:600; }
+    .hero{
+      display:flex; gap:40px; align-items:center; padding:36px;
+      max-width:1200px; margin:18px auto;
+    }
+    .left{
+      flex:1;
+    }
+    h1{ font-size:44px; margin:0 0 12px; color:#6b2b6b; }
+    p.lead{ font-size:18px; margin:0 0 18px; color:#5b2a5b; }
+    .price-box{
+      background:var(--card-bg); padding:18px; border-radius:14px; width:320px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.08);
+    }
+    .price-old{ text-decoration:line-through; color:#a05a8a; margin-bottom:6px; }
+    .price-now{ font-size:28px; font-weight:800; color:#9b1fb0; margin:0; }
+    .badge{ display:inline-block; background:#fff; padding:6px 10px; border-radius:999px; font-weight:700; margin-top:8px;}
+    .buy-btn{
+      display:block; margin-top:16px; background:linear-gradient(90deg,var(--deep),var(--magenta));
+      color:white; border:none; padding:12px 18px; border-radius:12px; font-size:18px;
+      cursor:pointer; width:100%;
+      box-shadow:0 8px 20px rgba(198,46,154,0.28);
+    }
+    .gallery{
+      flex:1;
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:12px;
+    }
+    .gallery img{ width:100%; border-radius:12px; box-shadow:0 10px 30px rgba(0,0,0,0.06); cursor:pointer; }
+
+    main{ max-width:1200px; margin:12px auto; padding:24px; display:grid; gap:20px; grid-template-columns:1fr 360px; }
+    .card{ background:var(--white); border-radius:14px; padding:18px; box-shadow:0 8px 28px rgba(0,0,0,0.04); }
+    .ingredients ul{ columns:2; padding-left:18px; }
+    .nutri table{ width:100%; border-collapse:collapse; }
+    .nutri th, .nutri td{ border-bottom:1px dashed #eee; padding:8px 6px; text-align:left; font-size:14px; }
+    .benefits li{ margin:8px 0; }
+    .beforeafter{ display:flex; gap:12px; }
+    .beforeafter img{ width:100%; border-radius:8px; display:block; box-shadow:0 8px 18px rgba(0,0,0,0.06); }
+    footer{ text-align:center; padding:18px; color:#7a3a7a; font-size:14px; margin-top:20px; }
+
+    /* modal */
+    .modal-backdrop{ position:fixed; inset:0; background:rgba(0,0,0,0.5); display:none; align-items:center; justify-content:center; z-index:100; }
+    .modal{ width:420px; background:white; border-radius:12px; padding:18px; box-shadow:0 18px 60px rgba(0,0,0,0.3); }
+    .modal h3{ margin:0 0 12px; color:#6b2b6b; }
+    .form-row{ display:flex; gap:8px; margin-bottom:10px; }
+    .form-row input, textarea, select{ flex:1; padding:10px; border-radius:8px; border:1px solid #eee; font-size:14px; }
+    .checkout-summary{ background:linear-gradient(180deg,#fff7fe,#fff0fb); padding:12px; border-radius:10px; margin-top:10px; }
+    .btn-secondary{ background:#fff; border:1px solid #e5d0e6; padding:10px 12px; border-radius:10px; cursor:pointer; }
+    .close{x button}
+    .success{ text-align:center; padding:18px; }
+
+    /* responsive */
+    @media (max-width:900px){
+      main{ grid-template-columns:1fr; padding:12px; }
+      .gallery{ grid-template-columns:1fr 1fr; }
+      .hero{ flex-direction:column; }
+      .price-box{ width:100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="brand">
+      <div class="logo">JH</div>
+      <div>
+        <div style="font-weight:800;color:#6b2b6b;">JellyHair</div>
+        <div style="font-size:12px;color:#7a3a7a;">Gomas vitamínicas para um cabelo forte e radiante</div>
+      </div>
+    </div>
+    <nav>
+      <a href="#benefits">Benefícios</a>
+      <a href="#ingredients">Ingredientes</a>
+      <a href="#nutrition">Nutrição</a>
+      <a href="#beforeafter">Antes/Depois</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="left">
+      <h1>O segredo para o cabelo longo e saudável que você sempre sonhou</h1>
+      <p class="lead">Gomas deliciosas, zero açúcar, com vitaminas e minerais pensados para fortalecer fios, reduzir queda e nutrir de dentro para fora.</p>
+
+      <div class="price-box">
+        <div class="price-old">De: R$ 89,90</div>
+        <div class="price-now">Por: <strong id="priceDisplay">R$ 53,94</strong> <span style="font-size:12px;color:#8b2a8b">(-40% + frete grátis)</span></div>
+        <div class="badge">60 gomas • 150g</div>
+        <button class="buy-btn" id="buyNow">COMPRAR AGORA - 40% OFF</button>
+        <div style="margin-top:8px; font-size:13px; color:#7a3a7a;">Frete grátis por tempo limitado</div>
+      </div>
+    </div>
+
+    <div class="gallery">
+      <!-- imagens -- paths apontando para os ficheiros que o dev carregou -->
+      <img alt="jellyhair-1" src="/mnt/data/D6B4DED2-C462-40AF-B974-AE8DEF20889A.jpeg" data-large="/mnt/data/D6B4DED2-C462-40AF-B974-AE8DEF20889A.jpeg">
+      <img alt="jellyhair-2" src="/mnt/data/BD385457-4B16-4C63-A464-9F569E5B4E34.jpeg" data-large="/mnt/data/BD385457-4B16-4C63-A464-9F569E5B4E34.jpeg">
+      <img alt="jellyhair-3" src="/mnt/data/3ABC85C2-3D9F-4F7B-983F-EB8BA1DC765B.jpeg" data-large="/mnt/data/3ABC85C2-3D9F-4F7B-983F-EB8BA1DC765B.jpeg">
+      <img alt="jellyhair-4" src="/mnt/data/1D9CAF46-B17C-4118-A146-6DC38F4E9387.jpeg" data-large="/mnt/data/1D9CAF46-B17C-4118-A146-6DC38F4E9387.jpeg">
+      <img alt="jellyhair-5" src="/mnt/data/35581562-C569-4BBC-81E4-299EEFFDF429.jpeg" data-large="/mnt/data/35581562-C569-4BBC-81E4-299EEFFDF429.jpeg">
+      <img alt="jellyhair-6" src="/mnt/data/53AB5217-7B7D-48C8-805A-A65BEB8F30A4.jpeg" data-large="/mnt/data/53AB5217-7B7D-48C8-805A-A65BEB8F30A4.jpeg">
+    </div>
+  </section>
+
+  <main>
+    <section>
+      <div class="card ingredients" id="ingredients">
+        <h2>Ingredientes</h2>
+        <p>Abaixo a formula completa:</p>
+        <ul>
+          <li>Maltitol</li>
+          <li>Xarope de Sorbitol</li>
+          <li>Pectina</li>
+          <li>Água</li>
+          <li>Colágeno Hidrolisado</li>
+          <li>Ácido Ascórbico (Vitamina C)</li>
+          <li>Acetato de Tocoferol (Vitamina E)</li>
+          <li>Ácido Pantotênico (Vitamina B5)</li>
+          <li>Bisglicinato de Zinco</li>
+          <li>Cloridrato de Piridoxina (Vitamina B6)</li>
+          <li>Retinol (Vitamina A)</li>
+          <li>Selenito de Sódio</li>
+          <li>Biotina</li>
+          <li>Cianocobalamina (Vitamina B12)</li>
+          <li>Extrato Seco de Bambu (fonte de Silício Orgânico)</li>
+          <li>Acidulantes: Ácido Cítrico e Ácido Láctico</li>
+          <li>Regulador de Acidez: Citrato de Sódio</li>
+          <li>Aroma Idêntico ao Natural de Morango</li>
+          <li>Corante Natural Antocianina</li>
+          <li>Glaceantes: Óleo de Coco e Cera de Carnaúba</li>
+        </ul>
+        <p style="font-weight:700; color:#6b2b6b;">ALÉRGICOS:</p>
+        <p>NÃO CONTÉM GLÚTEN. PODE CONTER SOJA, LEITE E PEIXES.</p>
+      </div>
+
+      <div class="card nutri" id="nutrition">
+        <h2>Informação Nutricional</h2>
+        <p>Porção: 5g (2 unidades)</p>
+        <table>
+          <thead>
+            <tr><th>Quantidade por porção</th><th>%VD*</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Valor energético — 21 kcal (88 kJ)</td><td>1%</td></tr>
+            <tr><td>Carboidratos — 5,1 g</td><td>2%</td></tr>
+            <tr><td>Vitamina A — 600 mcg</td><td>100%</td></tr>
+            <tr><td>Vitamina D2 — 10 mcg</td><td>200%</td></tr>
+            <tr><td>Vitamina E — 10 mg</td><td>100%</td></tr>
+            <tr><td>Vitamina C — 45 mg</td><td>100%</td></tr>
+            <tr><td>Vitamina K — 65 mcg</td><td>100%</td></tr>
+            <tr><td>Biotina — 45 mcg</td><td>150%</td></tr>
+            <tr><td>Vitamina B5 — 5,3 mg</td><td>106%</td></tr>
+            <tr><td>Vitamina B6 — 2,5 mg</td><td>192%</td></tr>
+            <tr><td>Vitamina B12 — 2,4 mcg</td><td>100%</td></tr>
+            <tr><td>Vitamina B9 (Ácido fólico) — 280 mcg</td><td>117%</td></tr>
+            <tr><td>Iodo — 130 mcg</td><td>100%</td></tr>
+            <tr><td>Cromo — 35 mcg</td><td>100%</td></tr>
+            <tr><td>Sódio — 11 mg</td><td>1%</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:12px; margin-top:10px;">*% Valores Diários de referência com base em uma dieta de 2.000 kcal.</p>
+      </div>
+
+      <div class="card">
+        <h2 id="benefits">Benefícios</h2>
+        <ul class="benefits">
+          <li><strong>Acelera o Crescimento Capilar</strong> (Devido à Biotina e Vitamina A).</li>
+          <li><strong>Reduz a Queda e a Quebra dos Fios</strong> (Graças ao Zinco e Selênio).</li>
+          <li><strong>Fortalece unhas e melhora a aparência da pele.</strong></li>
+          <li><strong>Fios mais brilhantes, resistentes e nutridos</strong> de dentro para fora.</li>
+        </ul>
+        <h3>Modo de uso</h3>
+        <p>Consumir <strong>2 gomas por dia</strong>, em qualquer horário. Não exceder a porção diária recomendada.</p>
+      </div>
+    </section>
+
+    <aside>
+      <div class="card">
+        <h3>Oferta Relâmpago</h3>
+        <p style="font-weight:700; color:#9b1fb0; font-size:18px;">40% OFF + Frete Grátis</p>
+        <p>Use o botão COMPRAR para garantir a oferta. Válido enquanto durarem os estoques fictícios :)</p>
+        <div style="margin-top:12px;">
+          <img src="/mnt/data/812880C2-2C46-4980-AD83-1DC59EAC6772.jpeg" style="width:100%; border-radius:10px;" alt="produto">
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:16px;">
+        <h3>Antes e Depois</h3>
+        <div class="beforeafter">
+          <img src="/mnt/data/1D97485D-137E-4639-B151-9890BF25D7C8.jpeg" alt="antes" title="Antes">
+          <img src="/mnt/data/26D2C3D8-6F6A-40D3-8B62-4F96BD3F4C9C.jpeg" alt="depois" title="Depois">
+        </div>
+        <p style="font-size:13px; color:#6b2b6b; margin-top:8px;">Resultados ilustrativos (imagem fictícia de antes e depois).</p>
+      </div>
+    </aside>
+  </main>
+
+  <footer>
+    <div>© 2025 JellyHair (fictício) — Todos os direitos reservados. Informação nutricional e ingredientes fornecidos para demonstração.</div>
+  </footer>
+
+  <!-- Modal de compra -->
+  <div class="modal-backdrop" id="modalBackdrop">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="checkoutTitle">
+      <button style="float:right; background:transparent; border:none; font-size:18px; cursor:pointer;" id="closeModal">✕</button>
+      <h3 id="checkoutTitle">Finalizar Compra — JellyHair</h3>
+      <p style="margin:6px 0 12px;">Pagamento e envio gratuitos fictícios — preencha os dados para simular a compra.</p>
+
+      <div>
+        <div class="form-row">
+          <input type="text" id="nome" placeholder="Nome completo" required>
+        </div>
+        <div class="form-row">
+          <input type="email" id="email" placeholder="E-mail" required>
+        </div>
+        <div class="form-row">
+          <input type="tel" id="telefone" placeholder="Telefone">
+        </div>
+        <div class="form-row">
+          <input type="text" id="cep" placeholder="CEP">
+          <input type="text" id="cidade" placeholder="Cidade">
+        </div>
+
+        <div class="checkout-summary" id="summary">
+          <div><strong>Produto:</strong> JellyHair • 60 gomas</div>
+          <div style="margin-top:6px;"><strong>Preço unitário:</strong> <span id="priceUnit">R$ 89,90</span></div>
+          <div style="margin-top:6px;"><strong>Desconto 40%:</strong> aplicado automaticamente</div>
+          <div style="margin-top:6px;"><strong>Frete:</strong> Grátis</div>
+          <div style="margin-top:8px; font-size:18px; color:#9b1fb0;"><strong>Total: <span id="total">R$ 53,94</span></strong></div>
+        </div>
+
+        <div style="display:flex; gap:8px; margin-top:12px;">
+          <button class="btn-secondary" id="simulate">Simular Pagamento</button>
+          <button class="buy-btn" id="confirmBuy">Confirmar Pedido</button>
+        </div>
+
+        <div id="purchaseResult" style="display:none; margin-top:12px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lightbox para imagens -->
+  <div id="lightbox" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); align-items:center; justify-content:center; z-index:120;">
+    <img id="lightboxImg" src="" style="max-width:92%; max-height:92%; border-radius:10px; box-shadow:0 20px 60px rgba(0,0,0,0.6)">
+  </div>
+
+  <script>
+    // Preço original e desconto
+    const originalPrice = 89.90;
+    const discount = 0.40;
+    const priceNow = (originalPrice * (1 - discount)).toFixed(2);
+
+    document.getElementById('priceDisplay').textContent = "R$ " + Number(priceNow).toFixed(2).replace('.',',');
+
+    // modal
+    const modal = document.getElementById('modalBackdrop');
+    const buyNow = document.getElementById('buyNow');
+    const closeModal = document.getElementById('closeModal');
+    const priceUnit = document.getElementById('priceUnit');
+    const totalEl = document.getElementById('total');
+
+    priceUnit.textContent = "R$ " + originalPrice.toFixed(2).replace('.',',');
+    totalEl.textContent = "R$ " + priceNow.replace('.',',');
+
+    buyNow.addEventListener('click', ()=> {
+      modal.style.display = 'flex';
+    });
+    closeModal.addEventListener('click', ()=> modal.style.display = 'none');
+    modal.addEventListener('click', (e)=> { if(e.target === modal) modal.style.display='none'; });
+
+    // simulate / confirm
+    document.getElementById('simulate').addEventListener('click', ()=>{
+      const name = document.getElementById('nome').value || "Cliente";
+      document.getElementById('purchaseResult').style.display = 'block';
+      document.getElementById('purchaseResult').innerHTML = '<div class="success"><strong>Simulação concluída</strong><p>Olá, '+name+' — o total com desconto e frete grátis é <strong>R$ '+priceNow.replace('.',',')+'</strong>.</p></div>';
+    });
+
+    document.getElementById('confirmBuy').addEventListener('click', ()=>{
+      const name = document.getElementById('nome').value || "Cliente";
+      modal.querySelector('.modal').innerHTML = '<div class="success"><h3>Pedido Concluído (fictício)</h3><p>Obrigado, ' + name + '!</p><p>Seu pedido foi registrado (simulação). Enviaremos um e-mail de confirmação fictício.</p><p style="margin-top:12px;"><button class="btn-secondary" id="closeSuccess">Fechar</button></p></div>';
+      document.getElementById('closeSuccess').addEventListener('click', ()=> location.reload());
+    });
+
+    // lightbox gallery
+    const imgs = document.querySelectorAll('.gallery img');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    imgs.forEach(img=>{
+      img.addEventListener('click', ()=> {
+        lightboxImg.src = img.getAttribute('data-large') || img.src;
+        lightbox.style.display = 'flex';
+      });
+    });
+    lightbox.addEventListener('click', ()=> lightbox.style.display = 'none');
+
+    // small accessibility: close modal on esc
+    document.addEventListener('keydown', (e)=> {
+      if(e.key === 'Escape'){ modal.style.display='none'; lightbox.style.display='none'; }
+    });
+
+  </script>
+</body>
+</html>
